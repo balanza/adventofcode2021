@@ -18,6 +18,27 @@ move([[down, N] | Moves], H, D, Horizontal, Depth):-
     NewD is D + N,
     move(Moves, H, NewD, Horizontal, Depth).
 
+question_two:-
+    read_all_lines("/code/02/input.txt", Values),
+    move_and_aim(Values, Horizontal, Depth),
+    Result is Horizontal * Depth,
+    write(Result), nl.
+
+move_and_aim(Moves, Horizontal, Depth):-
+    move_and_aim(Moves, 0, 0, 0, Horizontal, Depth).
+
+move_and_aim([], Horizontal, Depth, _, Horizontal, Depth).
+move_and_aim([[forward, N] | Moves], H, D, Aim, Horizontal, Depth):-
+    NewH is H + N,
+    NewD is D + Aim * N,
+    move_and_aim(Moves, NewH, NewD, Aim, Horizontal, Depth).
+move_and_aim([[up, N] | Moves], H, D, Aim, Horizontal, Depth):-
+    NewAim is Aim - N,
+    move_and_aim(Moves, H, D, NewAim, Horizontal, Depth).
+move_and_aim([[down, N] | Moves], H, D, Aim, Horizontal, Depth):-
+    NewAim is Aim + N,
+    move_and_aim(Moves, H, D, NewAim, Horizontal, Depth).
+
 
 %
 % File read utils

@@ -12,6 +12,21 @@ count_inc([X, Y | T], R, C):-
     ).
 count_inc(_, R, C):- length(R, C).
 
+question_two:-
+    read_all_lines("/code/01/input.txt", Values),
+    count_window_inc(Values, Result),
+    write(Result), nl.
+
+count_window_inc(L, C):- count_window_inc(L, [], C).
+count_window_inc([], [], 0).
+count_window_inc([X1, X2, X3, X4 | T], R, C):-
+    X is X1 + X2 + X3,
+    Y is X2 + X3 + X4,
+    (Y > X
+        -> count_window_inc([X2, X3, X4 | T], [X|R], C)
+        ; count_window_inc([X2, X3, X4 | T], R, C)
+    ).
+count_window_inc(_, R, C):- length(R, C).
 
 
 %
